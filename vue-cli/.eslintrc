@@ -36,6 +36,7 @@
     "key-spacing": ["error", { "afterColon": true }],
     "comma-spacing": ["error", { "after": true }],
     "space-in-parens": "error",
-    "vue/no-unused-components": "warn"
+    "vue/no-unused-components": "warn",
+    "vue/multi-word-component-names": "off"
   }
 }
