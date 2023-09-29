@@ -10,7 +10,19 @@
   </head>
 
   <body>
-    <div id="app">{{ name }} tem {{ age }} anos</div>
+    <div id="app">
+      Usando variáveis:
+      {{ name }} tem {{ age }} anos
+      <br>
+      Formulário:
+      <br>
+      v-model e v-on:evento
+      <form id="app-form">
+        <input type="text" v-model="input_name" placeholder="Digite seu nome" required>
+        <input type="submit" v-on:click="submitForm" value="Enviar">
+      </form>
+      novo name: {{ input_name }}
+    </div>
   </body>
 
 </html>
