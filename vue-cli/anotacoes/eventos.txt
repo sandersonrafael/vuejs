@@ -1,0 +1,14 @@
+# Eventos
+
+* Utilizados para complementar ações do usuários com ativação de métodos
+* Há diversos tipos de eventos em Vue, com a sintaxe do v-on: ou @, como @click
+* Podemos obter implicitamente, como @evento="metodo" ou com a sintaxe @evento="metodo($event)"
+  -> metodo(e) { ... }
+
+
+# Múltiplos eventos
+
+* O Vue também permite a entrada de múltiplos eventos em um mesmo evento
+* Sintaxe similar
+* Mas serão separados por vírgula
+* Permite executar dois ou mais métodos com um click

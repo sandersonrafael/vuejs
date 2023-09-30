@@ -1,0 +1,5 @@
+# Reutilização de componentes
+
+* Cada componente reutilizado, é completamente independente
+* Métodos e dados podem ser alterados quando necessário
+* Para utilizar, basta invocar novamente após a importação do componente
