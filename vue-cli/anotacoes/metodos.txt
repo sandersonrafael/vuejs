@@ -1,0 +1,9 @@
+# Métodos
+
+* São funções
+* Podem ser executados baseados em eventos ou lógica específica
+* Para o script default do arquivo .vue, ficam na chave methods: {},
+
+# Eventos
+
+* Para utilizar eventos html no vue, usamos o v-on:evento="" ou a notação @evento="" nos elementos

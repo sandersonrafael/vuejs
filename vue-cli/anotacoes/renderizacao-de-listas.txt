@@ -1,0 +1,8 @@
+# Listas
+
+* Listas ou Arrays serão renderizados por diretivas
+* A diretiva para lidar com essa renderização é o v-for
+* O dado vem do objeto data como um array
+* Cada item é impresso junto do HTML, repetindo uma mesma estrutura
+* Sintaxe: <tag v-for="(item, index) in items" :key="index_ou_outra_key_específica">
+* O v-for deve ser usado diretamente no elemento que será repetido, como uma <li> em vez da <ul>

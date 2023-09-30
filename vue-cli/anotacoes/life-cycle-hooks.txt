@@ -1,0 +1,13 @@
+# Life Cycle Hooks
+
+* Representam métodos do ciclo de vida de cada componente no Vue
+* São similares ao atual useEffect do React
+* São usados na própria exportação do vue
+* Chaves comuns a serem usadas:
+  -> created() {}
+  -> mounted() {}
+  -> unmounted() {}
+  -> updated() {}
+  -> beforeUpdate() {}
+  -> beforeCreate() {}
+  -> demais befores...

@@ -1,0 +1,13 @@
+# CSS
+
+* Pode ser usado de duas formas: Global e Scoped
+
+* Global:
+  -> CSS definido no próprio app, onde todos elementos abaixo na hierarquia sofrerão suas modificações.
+  -> Não importa se a tag <style><style/> é adicionada no componente pai, ou filho. Se a tag style não tiver
+  declaração de escopo, será um estilo global
+
+* Scoped:
+  -> Cada componente pode ter seu próprio estilo
+  -> Para utilizar, basta utilizar <style scoped> <style/>
+  -> Os estilos adicionados ao componente não vazam para fora do escopo

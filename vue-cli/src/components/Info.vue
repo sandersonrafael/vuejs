@@ -3,14 +3,16 @@
   <p v-if="esta_trabalhando">Estou trabalhando no momento</p>
   <p v-else>Não estou trabalhando no momento</p> <!-- Necessita o v-if antes -->
   <button v-on:click="changeWorking">mudar</button>
-  <p>Utilizo as seguintes tecnologias:</p>
+  <p>Utilizo as seguintes tecnologias para back-end:</p>
   <ul>
-    <li>JavaScript</li>
-    <li>PHP</li>
-    <li>Java</li>
+    <li v-for="(linguagem, index) in linguagens_backend" :key="index">{{ linguagem }}</li>
+  </ul>
+  <p>Utilizo as seguintes tecnologias para front-end:</p>
+  <ul>
+    <li v-for="{linguagem, id} in linguagens_frontend" :key="id">{{ linguagem }}</li>
   </ul>
   <p v-show="mostrar_email">Mande uma mensagem para: {{ email }}</p>
-  <p>Para acessar meu portfólio, basta clicar <a target="_blank" v-bind:href="portfolio">aqui</a></p>
+  <p class="teste">Para acessar meu portfólio, basta clicar <a target="_blank" v-bind:href="portfolio">aqui</a></p>
 
   <p>imagem de usuario:</p>
   <PictureVue />
@@ -27,6 +29,12 @@ export default {
       mostrar_email: true,
       email: 'ciclano@email.com',
       portfolio: 'https://www.bing.com',
+      linguagens_backend: ['Javascript', 'PHP', 'Java'],
+      linguagens_frontend: [
+        { id: 1, linguagem: 'HTML' },
+        { id: 2, linguagem: 'CSS' },
+        { id: 3, linguagem: 'Vue' },
+      ],
     };
   },
   components: {
@@ -40,3 +48,9 @@ export default {
   },
 };
 </script>
+
+<style>
+  .paragrafo-pai {
+    color: red;
+  }
+</style>
