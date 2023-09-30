@@ -1,0 +1,11 @@
+# Argumentos
+
+* Valores dinâmicos que podem ser adicionados em:
+  -> Diretivas - executam determinado comportamento baseado no valor
+  -> Atributos - mudar urls em src ou href de imagens, links e etc
+
+* Para utilizar essa dinamicidade, utilizamos o v-bind:nome_do_atributo
+  -> ex: v-bind:href="isto_agora_e_um_script_e_nao_so_string"
+
+* Em vez de v-bind, também é possível simplesmente utilizar o : antes do atributo, como:
+  -> <img :src="isto_e_um_script_e_nao_uma_string" :alt="isto_e_outro_script" />

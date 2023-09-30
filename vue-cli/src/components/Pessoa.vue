@@ -1,9 +1,6 @@
 <template>
   <h2>Essa é uma descrição de uma pessoa: {{ nome }}</h2>
   <Info />
-  <Info />
-  <Info />
-
 </template>
 
 <script lang="ts">

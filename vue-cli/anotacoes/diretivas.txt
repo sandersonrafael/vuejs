@@ -1,0 +1,7 @@
+# Diretivas
+
+Trazem dinamismo à aplicação
+
+ex: v-if -> exibe se a condição passada for verdadeira
+há diversas diretivas disponíveis
+v-show é similar ao v-if

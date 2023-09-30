@@ -32,7 +32,6 @@
     "space-before-blocks": "error",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
     "eol-last": "error",
-    "max-len": ["error", 99],
     "key-spacing": ["error", { "afterColon": true }],
     "comma-spacing": ["error", { "after": true }],
     "space-in-parens": "error",
