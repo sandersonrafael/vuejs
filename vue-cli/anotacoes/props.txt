@@ -1,0 +1,24 @@
+# Props
+
+* Os componentes no Vue podem receber dados
+* Para propagar props, é necessário atribuir chave e valor com o nome da prop dentro do elemento pai
+* Props podem ser passadas pelos valores do data, mas também pode ser inseridas diretamente
+* É necessário declarar as propriedades recebidas em um objeto chamado props no export default.
+
+* Ex:
+export default {
+  name: 'nome',
+  props: {
+    prop1: Tipo1,
+    prop2: Tipo2,
+    prop3: Tipo3
+  }
+}
+
+* Em vez de um objeto, pode ser passado também um array como props. Neste caso, não há tipagem
+
+* Ex2:
+export default {
+  name: 'nome',
+  props: [prop1, prop2, prop3]
+}

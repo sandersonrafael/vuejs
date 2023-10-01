@@ -1,0 +1,33 @@
+# Emit
+
+* Utilizando o $emit é possível ouvir um evento de um componente filho em um componente pai
+* Isso torna possível ativar métodos no componente pai
+* O evento é registrado no componente
+* É necessário definir o que é feito com a ativação do evento na chamada do componente
+
+* Para usar, é necessário utilizar a sintaxe no componente filho:
+
+<elemento @evento="$emit("metodo_do_componente_pai_em_string")"><elemento/>
+
+<script>
+  name: 'nome_do_filho',
+  emits: ['primeiroEmit', 'segundoEmit', 'terceiroEmit']
+<script/>
+
+* Já o componente pai, onde chama o componente filho, precisa da declaração de recepção do emit. Ex:
+
+<template_pai>
+  <ComponenteFilho @primeiro-emit="metodo_desejado" />
+<template_pai>
+
+<script>
+  name: 'nome_do_pai',
+  methods: {
+    metodo_desejado() {
+      ...codigo
+    }
+  }
+<script />
+
+* Obs: caso haja dúvida para o nome do "receptor" do emit ao chamar o componente, o VSCode ajuda com
+  auto complete. Basta digitar o @ e a opção do receptor será exibida

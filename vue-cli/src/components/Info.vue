@@ -1,8 +1,9 @@
 <!-- O v-if faz com que o elemento seja renderizado se uma condição for atingida (true) -->
 <template>
+  <p>Email passado por props: {{ emailProp }}</p>
   <p v-if="esta_trabalhando">Estou trabalhando no momento</p>
   <p v-else>Não estou trabalhando no momento</p> <!-- Necessita o v-if antes -->
-  <button v-on:click="changeWorking">mudar</button>
+  <button v-on:click="(changeTrabalhando as Function)">mudar</button>
   <p>Utilizo as seguintes tecnologias para back-end:</p>
   <ul>
     <li v-for="(linguagem, index) in linguagens_backend" :key="index">{{ linguagem }}</li>
@@ -23,9 +24,13 @@
 import PictureVue from './PictureVue.vue';
 export default {
   name: 'Info',
+  props: {
+    emailProp: String,
+    esta_trabalhando: Boolean,
+    changeTrabalhando: Function,
+  },
   data() {
     return {
-      esta_trabalhando: false,
       mostrar_email: true,
       email: 'ciclano@email.com',
       portfolio: 'https://www.bing.com',
@@ -39,12 +44,6 @@ export default {
   },
   components: {
     PictureVue,
-  },
-  methods: {
-    changeWorking() {
-      this.esta_trabalhando = !this.esta_trabalhando;
-      this.mostrar_email = !this.mostrar_email;
-    },
   },
 };
 </script>
