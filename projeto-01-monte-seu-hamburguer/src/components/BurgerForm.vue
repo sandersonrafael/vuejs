@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>componente de mensagem</p>
+    <Message :msg="msg" v-show="msg" />
     <div>
       <form id="burger-form" @submit="saveBurger">
         <div class="input-container">
@@ -47,9 +47,13 @@
 import Ingredientes from '../types/Ingredientes';
 import BurgerFormData from '../types/BurgerFormDataType';
 import BurgerData from '../types/BurgerData';
+import Message from './Message.vue';
 
 export default {
   name: 'BurgerForm',
+  components: {
+    Message,
+  },
   data(): BurgerFormData {
     return {
       paes: [],
@@ -75,10 +79,6 @@ export default {
     saveBurger(e: Event): BurgerData {
       e.preventDefault();
 
-      this.deleteBurger(1);
-      this.deleteBurger(2);
-      this.deleteBurger(3);
-
       const savedStorage: null | string = localStorage.getItem('burgers');
       const burgers = savedStorage !== null ? JSON.parse(savedStorage) : { list: [], totalOrders: 0 };
 
@@ -95,6 +95,10 @@ export default {
       burgers.totalOrders = data.id;
 
       localStorage.setItem('burgers', JSON.stringify(burgers));
+
+      this.msg = `Pedido Nº ${data.id} realizado com sucesso`;
+
+      setTimeout(() => this.msg = '', 2000);
 
       this.nome = '';
       this.pao = '';
