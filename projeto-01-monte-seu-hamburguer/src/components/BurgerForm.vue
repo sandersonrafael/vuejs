@@ -112,16 +112,6 @@ export default {
       const burgersList: BurgerData[] = burgers ? JSON.parse(burgers).list : [];
       return burgersList;
     },
-    deleteBurger(sentId: number): BurgerData {
-      const burgers = localStorage.getItem('burgers') as string;
-      const burgersObj: { list: BurgerData[], totalOrders: number } = JSON.parse(burgers);
-      const { list, totalOrders } = burgersObj;
-      const newBurgersList = list.filter((item) => item.id !== sentId);
-
-      localStorage.setItem('burgers', JSON.stringify({ list: newBurgersList, totalOrders }));
-
-      return list.find((item) => item.id === sentId) as BurgerData;
-    },
   },
   mounted() {
     this.getIngredientes();

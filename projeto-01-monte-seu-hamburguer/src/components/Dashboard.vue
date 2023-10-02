@@ -1,5 +1,7 @@
 <template>
   <div id="burger-table">
+    <Message :msg="msg" v-show="msg" />
+
     <div>
       <div id="burger-table-heading">
         <div class="order-id">#:</div>
@@ -23,10 +25,12 @@
             </ul>
           </div>
           <div>
-            <select name="status" class="status">
-              <option value="">Selecione</option>
+            <select name="status" class="status" :value="burger.status" @change="updateBurgerStatus($event, burger.id)">
+              <option v-for="status in statusList" :value="status.tipo" :key="status.id" >
+                {{ status.tipo }}
+              </option>
             </select>
-            <button class="delete-btn">Cancelar</button>
+            <button @click="deleteBurger(burger.id)" class="delete-btn">Cancelar</button>
           </div>
         </div>
 
@@ -37,14 +41,20 @@
 
 <script lang="ts">
 import BurgerData from '../types/BurgerData';
+import Item from '../types/Item';
+import Message from './Message.vue';
 
 export default {
   name: 'Dashboard',
+  components: {
+    Message,
+  },
   data() {
     return {
       burgers: ([] as BurgerData[]),
       burger_id: (null as number | null),
-      status: ([] as string[]),
+      statusList: ([] as Item[]),
+      msg: '',
     };
   },
   methods: {
@@ -52,11 +62,50 @@ export default {
       const burgersData: string | null = localStorage.getItem('burgers');
       const list: BurgerData[] = (burgersData ? JSON.parse(burgersData).list : []);
       this.burgers = [...list];
+    },
+    async getStatusList() {
+      const req = await fetch('/status.json');
+      const statusList: Item[] = await req.json();
 
+      this.statusList = [...statusList];
+    },
+    deleteBurger(sentId: number): BurgerData {
+      const burgers = localStorage.getItem('burgers') as string;
+      const burgersObj: { list: BurgerData[], totalOrders: number } = JSON.parse(burgers);
+      const { list, totalOrders } = burgersObj;
+      const newBurgersList = list.filter((item) => item.id !== sentId);
+
+      localStorage.setItem('burgers', JSON.stringify({ list: newBurgersList, totalOrders }));
+
+      this.showMessage(`Pedido #${sentId} cacelado!`);
+
+      this.getPedidos();
+
+      return list.find((item) => item.id === sentId) as BurgerData;
+    },
+    updateBurgerStatus(e: Event, sentId: number): BurgerData[] {
+      const newStatus = (e.target as HTMLSelectElement).value;
+      const burgersStorage = localStorage.getItem('burgers') as string;
+      const burgers: { list: BurgerData[], totalOrders: number } = JSON.parse(burgersStorage);
+      const list = [...burgers.list];
+
+      const newlist = list.map((item) => item.id !== sentId ? item : { ...item, status: newStatus });
+      burgers.list = [...newlist];
+
+      localStorage.setItem('burgers', JSON.stringify(burgers));
+
+      this.showMessage(`Status do pedido #${sentId} atualizado!`);
+
+      return burgers.list;
+    },
+    showMessage(msg: string) {
+      this.msg = msg;
+      setTimeout(() => this.msg = '', 3000);
     },
   },
   mounted() {
     this.getPedidos();
+    this.getStatusList();
   },
 };
 </script>
