@@ -11,15 +11,15 @@
       </div>
 
       <div id="burger-table-rows">
-        <div class="burger-table-row">
-          <div class="order-number">1</div>
-          <div>João</div>
-          <div>Frances</div>
-          <div>Maminha</div>
+
+        <div class="burger-table-row" v-for="burger in burgers" :key="burger.id">
+          <div class="order-number">{{ burger.id }}</div>
+          <div>{{ burger.nome }}</div>
+          <div>{{ burger.pao }}</div>
+          <div>{{ burger.carne }}</div>
           <div>
             <ul>
-              <li>Salame</li>
-              <li>Tomate</li>
+              <li v-for="(opcional, index) in burger.opcionais" :key="index">{{ opcional }}</li>
             </ul>
           </div>
           <div>
@@ -36,8 +36,28 @@
 </template>
 
 <script lang="ts">
+import BurgerData from '../types/BurgerData';
+
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      burgers: ([] as BurgerData[]),
+      burger_id: (null as number | null),
+      status: ([] as string[]),
+    };
+  },
+  methods: {
+    async getPedidos() {
+      const burgersData: string | null = localStorage.getItem('burgers');
+      const list: BurgerData[] = (burgersData ? JSON.parse(burgersData).list : []);
+      this.burgers = [...list];
+
+    },
+  },
+  mounted() {
+    this.getPedidos();
+  },
 };
 </script>
 
