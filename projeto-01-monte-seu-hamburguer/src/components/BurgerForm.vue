@@ -2,7 +2,7 @@
   <div>
     <p>componente de mensagem</p>
     <div>
-      <form id="burger-form">
+      <form id="burger-form" @submit="saveBurger">
         <div class="input-container">
           <label for="nome">Nome do cliente:</label>
           <input type="text" name="name" id="nome" v-model="nome" placeholder="Digite o seu nome">
@@ -12,34 +12,27 @@
           <label for="pao">Escolha o pão:</label>
           <select name="pao" id="pao" v-model="pao">
             <option value="">Selecione o seu pão</option>
-            <option value="integral">Integral</option>
+            <option v-for="pao in paes" :key="pao.id" :value="pao.tipo">{{ pao.tipo }}</option>
           </select>
         </div>
 
         <div class="input-container">
           <label for="carne">Escolha a carne do seu Burger:</label>
-          <select name="carne" id="carne" v-model="pao">
+          <select name="carne" id="carne" v-model="carne">
             <option value="">Selecione o tipo de carne</option>
-            <option value="integral">Maminha</option>
+            <option v-for="carne in carnes" :key="carne.id" :value="carne.tipo">
+              {{ carne.tipo }}
+            </option>
           </select>
         </div>
 
         <div id="opcionais-container" class="input-container">
           <label id="opcionais-title" for="opcionais">Escolha os opcionais:</label>
-          <div class="checkbox-container">
-            <input type="checkbox" name="opcionais" v-model="opcionais" value="Salame">
-            <span>Salame</span>
+          <div class="checkbox-container" v-for="opcional in opcionaisData" :key="opcional.id">
+            <input type="checkbox" name="opcionais" v-model="opcionais" :value="opcional.tipo">
+            <span>{{ opcional.tipo }}</span>
           </div>
 
-          <div class="checkbox-container">
-            <input type="checkbox" name="opcionais" v-model="opcionais" value="Salame">
-            <span>Salame</span>
-          </div>
-
-          <div class="checkbox-container">
-            <input type="checkbox" name="opcionais" v-model="opcionais" value="Salame">
-            <span>Salame</span>
-          </div>
         </div>
 
         <div class="input-container">
@@ -51,14 +44,83 @@
 </template>
 
 <script lang="ts">
+import Ingredientes from '../types/Ingredientes';
+import BurgerFormData from '../types/BurgerFormDataType';
+import BurgerData from '../types/BurgerData';
+
 export default {
   name: 'BurgerForm',
-  data() {
+  data(): BurgerFormData {
     return {
+      paes: [],
+      carnes: [],
+      opcionaisData: [],
       nome: '',
       pao: '',
-      opcionais: '',
+      carne: '',
+      opcionais: [],
+      msg: '',
     };
+  },
+  methods: {
+    async getIngredientes() {
+
+      const req = await fetch('/ingredientes.json');
+      const data: Ingredientes = await req.json();
+
+      this.paes = [...data.paes];
+      this.carnes = [...data.carnes];
+      this.opcionaisData = [...data.opcionais];
+    },
+    saveBurger(e: Event): BurgerData {
+      e.preventDefault();
+
+      this.deleteBurger(1);
+      this.deleteBurger(2);
+      this.deleteBurger(3);
+
+      const savedStorage: null | string = localStorage.getItem('burgers');
+      const burgers = savedStorage !== null ? JSON.parse(savedStorage) : { list: [], totalOrders: 0 };
+
+      const data: BurgerData = {
+        id: burgers.totalOrders + 1,
+        nome: this.nome,
+        carne: this.carne,
+        pao: this.pao,
+        opcionais: Array.from(this.opcionais),
+        status: 'Solicitado',
+      };
+
+      burgers.list.push(data);
+      burgers.totalOrders = data.id;
+
+      localStorage.setItem('burgers', JSON.stringify(burgers));
+
+      this.nome = '';
+      this.pao = '';
+      this.carne = '';
+      this.opcionais = [];
+
+      return data;
+    },
+    getBurgers(): BurgerData[] {
+      const burgers = localStorage.getItem('burgers');
+      const burgersList: BurgerData[] = burgers ? JSON.parse(burgers).list : [];
+      return burgersList;
+    },
+    deleteBurger(sentId: number): BurgerData {
+      const burgers = localStorage.getItem('burgers') as string;
+      const burgersObj: { list: BurgerData[], totalOrders: number } = JSON.parse(burgers);
+      const { list, totalOrders } = burgersObj;
+      const newBurgersList = list.filter((item) => item.id !== sentId);
+
+      localStorage.setItem('burgers', JSON.stringify({ list: newBurgersList, totalOrders }));
+
+      return list.find((item) => item.id === sentId) as BurgerData;
+    },
+  },
+  mounted() {
+    this.getIngredientes();
   },
 };
 </script>
